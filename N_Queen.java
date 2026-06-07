@@ -43,6 +43,7 @@ public class N_Queen {
                 return false;
             }
         }
+              // Position is safe for placing a queen
         return true;
     }
     public void saveboard(char[][] board, List<List<String>> allboards){
@@ -60,15 +61,22 @@ public class N_Queen {
         }
         allboards.add(newboard);
     }
+       //For the backtracking part:
     public void helper(char[][] board, List<List<String>> allboards, int col){
+            // Base case: all queens placed successfully
         if(col==board.length){
             saveboard(board,allboards);
             return;
         }
+           // Try placing queen in every row of current column
         for (int row=0;row<board.length; row++){
+                // Check if current position is safe
             if(isSafe(row,col,board)){
+                   // Choose: place queen
                 board[row][col]='Q';
+                   // Explore: solve for next column
                 helper(board,allboards,col+1);
+                   // Unchoose (Backtrack): remove queen
                 board[row][col]='.';
             }
         }
@@ -82,6 +90,7 @@ public class N_Queen {
         helper(board,allboards,0);
         return allboards;
     }
+       // Create object of N_Queen class
     public static void main(String[] args) {
 
         N_Queen obj = new N_Queen();
@@ -89,7 +98,7 @@ public class N_Queen {
         int n = 4;
 
         List<List<String>> result = obj.solveNQueens(n);
-
+// Print all valid solutions
         for (List<String> board : result) {
             System.out.println("Solution:");
             for (String row : board) {
